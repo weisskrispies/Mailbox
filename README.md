@@ -6,7 +6,7 @@ Time Spent: __ hours
 ## Stories Completed
 
 *Drag Message Left*
-* Initially= background color should be gray
+* Initially, background color should be gray
 * Reschedule icon fades from semi-transparent to fully opaque as panned
 * Background color changes to yellow after 60 pts
 * Upon release the message exits left and presents the Reschedule modal
