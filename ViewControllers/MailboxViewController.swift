@@ -24,11 +24,27 @@ class MailboxViewController: UIViewController, UIScrollViewDelegate, UIGestureRe
     @IBOutlet weak var archiveIconImageView: UIImageView!
     @IBOutlet weak var deleteIconImageView: UIImageView!
     
+    @IBOutlet weak var composeMessageButton: UIButton!
+    @IBOutlet weak var composeBackgroundView: UIView!
+    @IBOutlet weak var composeMessageView: UIView!
+    @IBOutlet weak var compoaseMessageCancelButton: UIButton!
+    @IBOutlet weak var composeCancelButton: UIButton!
+    @IBOutlet weak var toRecipientField: UITextField!
+    
+    @IBOutlet weak var inboxHomeView: UIView!
+    
+    @IBOutlet weak var inboxSegmentController: UISegmentedControl!
+    
+    
     var initialCenter: CGPoint!
     var feedViewStartingPoint: CGPoint!
     var feedViewShiftedUp: CGPoint!
     var rightIconStartingPoint: CGPoint!
     var leftIconStartingPoint: CGPoint!
+    var inboxHomeLocation: CGPoint!
+    var menuVisible: Bool!
+    var composeMessageViewOriginalCenter: CGPoint!
+    
 
     //Colors
     let mailboxGreen: UIColor = UIColor(red: 136/255, green: 208/255, blue: 98/255, alpha: 1)
@@ -44,11 +60,23 @@ class MailboxViewController: UIViewController, UIScrollViewDelegate, UIGestureRe
 
         scrollView.contentSize = CGSize(width: 320, height: 1367)
 
+        // hides the schedule and list modals and icons
         rescheduleImageView.alpha = 0
         assignToListImageView.alpha = 0
-        
         assignToListIconImageView.alpha = 0
         deleteIconImageView.alpha = 0
+        
+        inboxSegmentController.tintColor = mailboxBlue
+        inboxSegmentController.selectedSegmentIndex = 1
+        
+        inboxHomeLocation = inboxHomeView.center
+        composeMessageViewOriginalCenter = composeMessageView.center
+        composeBackgroundView.alpha = 0
+        composeMessageView.alpha = 0
+        
+        composeBackgroundView.userInteractionEnabled = Bool(false)
+        composeMessageView.userInteractionEnabled = Bool(false)
+        menuVisible = false
     }
 
     override func didReceiveMemoryWarning() {
@@ -282,6 +310,69 @@ class MailboxViewController: UIViewController, UIScrollViewDelegate, UIGestureRe
     func hideRightIcons() {
         self.rightIconView.alpha = 0
     }
-    
 
+    @IBAction func onMenuButtonTap(sender: AnyObject) {
+        println("Hitting menu button")
+        if menuVisible == false {
+            showMenu()
+            scrollView.userInteractionEnabled = Bool(false)
+        } else {
+            hideMenu()
+            scrollView.userInteractionEnabled = Bool(true)
+        }
+        
+
+    }
+    
+    func showMenu() {
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: nil, animations: { () -> Void in
+            self.inboxHomeView.center.x = self.inboxHomeLocation.x + 270
+            self.menuVisible = true
+            }, completion: nil)
+    }
+    
+    func hideMenu() {
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.0, options: nil, animations: { () -> Void in
+            self.inboxHomeView.center.x = self.inboxHomeLocation.x
+            self.menuVisible = false
+            }, completion: nil)
+    }
+    
+    @IBAction func onComposeMessageButton(sender: AnyObject) {
+        self.composeMessageView.userInteractionEnabled = Bool(true)
+        self.composeBackgroundView.userInteractionEnabled = Bool(true)
+        composeMessageAnimateIn()
+        self.toRecipientField.becomeFirstResponder()
+    }
+
+    @IBAction func onComposeCancelButton(sender: AnyObject) {
+        composeMessageAnimateOut()
+        self.composeMessageView.userInteractionEnabled = Bool(false)
+        self.composeBackgroundView.userInteractionEnabled = Bool(false)
+    }
+
+    
+    func composeMessageAnimateIn() {
+        self.composeMessageView.alpha = 1
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.composeBackgroundView.alpha = 0.7
+
+        })
+        UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.0, options: nil, animations: { () -> Void in
+            self.composeMessageView.center.y = 158
+            }, completion: nil)
+    }
+    
+    func composeMessageAnimateOut() {
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.composeBackgroundView.alpha = 0
+            self.composeMessageView.alpha = 0
+        })
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.0, options: nil, animations: { () -> Void in
+            self.composeMessageView.center.y = self.composeMessageViewOriginalCenter.y
+            }, completion: nil)
+    }
+    
+    
+    
 }
