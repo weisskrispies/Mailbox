@@ -1,7 +1,7 @@
 # Mailbox
 CodePath Week 3 Assignment
 
-Time Spent: __ hours
+Time Spent: 15 hours
 
 ## Stories Completed
 
@@ -22,15 +22,10 @@ Time Spent: __ hours
 * Upon release, the message exits right and animates message out
 
 *Optional*
-* Tapping on compose should animate to reveal the compose view.
-
-Optional: Panning from the edge should reveal the menu
-Optional: If the menu is being revealed when the user lifts their finger, it should continue revealing.
-Optional: If the menu is being hidden when the user lifts their finger, it should continue hiding.
-Optional: Tapping on compose should animate to reveal the compose view.
-Optional: Tapping the segmented control in the title should swipe views in from the left or right.
-Optional: Shake to undo.
+* Tapping on compose should animate to reveal the compose view
+* Tapping on the menu button exposes the menu
 
 
-<img src="inserthere"" width="300">
+
+<img src="https://lh3.googleusercontent.com/-6OYzqJQQMdI/VWJeb_9ODYI/AAAAAAAADUw/AWnnhuyeeBw/s512/Mailbox.gif"" width="300">
 
