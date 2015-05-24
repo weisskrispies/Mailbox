@@ -5,9 +5,6 @@ Time Spent: __ hours
 
 ## Stories Completed
 
-*Welcome Screen*
-* Optional: Photo tiles move with scrolling
-
 *Drag Message Left*
 * Initially= background color should be gray
 * Reschedule icon fades from semi-transparent to fully opaque as panned
