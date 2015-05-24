@@ -27,7 +27,6 @@ class MailboxViewController: UIViewController, UIScrollViewDelegate, UIGestureRe
     var initialCenter: CGPoint!
     var feedViewStartingPoint: CGPoint!
     var feedViewShiftedUp: CGPoint!
-    var laterIconInitialCenter: CGPoint!
     var rightIconStartingPoint: CGPoint!
     var leftIconStartingPoint: CGPoint!
 
@@ -48,6 +47,8 @@ class MailboxViewController: UIViewController, UIScrollViewDelegate, UIGestureRe
         rescheduleImageView.alpha = 0
         assignToListImageView.alpha = 0
         
+        assignToListIconImageView.alpha = 0
+        deleteIconImageView.alpha = 0
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,50 +66,51 @@ class MailboxViewController: UIViewController, UIScrollViewDelegate, UIGestureRe
             feedViewStartingPoint = feedImageView.center
             rightIconStartingPoint = rightIconView.center
             leftIconStartingPoint = leftIconView.center
-            assignToListIconImageView.alpha = 0
-            deleteIconImageView.alpha = 0
 
         } else if sender.state == UIGestureRecognizerState.Changed {
 
             messageImageView.center = CGPoint(x: translation.x + initialCenter.x, y: initialCenter.y)
+            archiveIconImageView.alpha = (translation.x / 60)
+            rescheduleIconImageView.alpha = (translation.x / -60)
             
             // minor pan
             if translation.x < 60 && translation.x > 60 {
                 messageBackgroundView.backgroundColor = mailboxGrey
+
             // archive
             } else if translation.x > 60 && translation.x < 190 {
                 println("Archive me?")
-                messageBackgroundView.backgroundColor = mailboxGreen
+                self.hideRightIcons()
                 archiveIconImageView.alpha = 1
                 deleteIconImageView.alpha = 0
-                rightIconView.alpha = 0
+                messageBackgroundView.backgroundColor = mailboxGreen
                 leftIconView.center = CGPoint(x: leftIconStartingPoint.x + translation.x - 60 , y: leftIconStartingPoint.y)
 
             // delete
             } else if translation.x > 190 {
                 println("Delete me?")
-                messageBackgroundView.backgroundColor = mailboxRed
-                archiveIconImageView.alpha = 0
                 deleteIconImageView.alpha = 1
-                rightIconView.alpha = 0
+                archiveIconImageView.alpha = 0
+                self.hideRightIcons()
+                messageBackgroundView.backgroundColor = mailboxRed
                 leftIconView.center = CGPoint(x: leftIconStartingPoint.x + translation.x - 60 , y: leftIconStartingPoint.y)
             
             // reschedule
             } else if translation.x < -60 && translation.x > -190 {
                 println("Reschedule me?")
-                messageBackgroundView.backgroundColor = mailboxYellow
+                self.hideLeftIcons()
                 rescheduleIconImageView.alpha = 1
                 assignToListIconImageView.alpha = 0
-                leftIconView.alpha = 0
+                messageBackgroundView.backgroundColor = mailboxYellow
                 rightIconView.center = CGPoint(x: rightIconStartingPoint.x + translation.x + 60 , y: rightIconStartingPoint.y)
 
             // list
             } else if translation.x < -190 {
                 println("Assign me to a list?")
-                messageBackgroundView.backgroundColor = mailboxBrown
+                self.hideLeftIcons()
                 rescheduleIconImageView.alpha = 0
                 assignToListIconImageView.alpha = 1
-                leftIconView.alpha = 0
+                messageBackgroundView.backgroundColor = mailboxBrown
                 rightIconView.center = CGPoint(x: rightIconStartingPoint.x + translation.x + 60 , y: rightIconStartingPoint.y)
 
             } else {
@@ -188,21 +190,20 @@ class MailboxViewController: UIViewController, UIScrollViewDelegate, UIGestureRe
         }
         
     }
-    func resetIcons() {
-        self.leftIconView.center = self.leftIconStartingPoint
-        self.leftIconView.alpha = 1
-        self.rightIconView.center = self.rightIconStartingPoint
-        self.rightIconView.alpha = 1
-        self.archiveIconImageView.alpha = 1
-        self.rescheduleIconImageView.alpha = 1
-    }
-    
+
     // sends message back to it's original location
     func resetMessageView() {
         UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.CurveEaseInOut , animations: { () -> Void in
             self.messageImageView.center = self.initialCenter
             self.feedImageView.center = self.feedViewStartingPoint
-            self.resetIcons()
+            self.leftIconView.center = self.leftIconStartingPoint
+            self.leftIconView.alpha = 1
+            self.archiveIconImageView.alpha = 1
+            self.deleteIconImageView.alpha = 0
+            self.rightIconView.center = self.rightIconStartingPoint
+            self.rightIconView.alpha = 1
+            self.rescheduleIconImageView.alpha = 1
+            self.assignToListIconImageView.alpha = 0
             }, completion: nil)
     }
 
@@ -210,7 +211,15 @@ class MailboxViewController: UIViewController, UIScrollViewDelegate, UIGestureRe
     func resetInbox() {
         UIView.animateWithDuration(0.01, delay: 0.6, options: nil, animations: { () -> Void in
             self.messageImageView.center.x = self.initialCenter.x
-            self.resetIcons()
+            self.leftIconView.center = self.leftIconStartingPoint
+            self.leftIconView.alpha = 1
+            self.archiveIconImageView.alpha = 1
+            self.deleteIconImageView.alpha = 0
+            self.rightIconView.center = self.rightIconStartingPoint
+            self.rightIconView.alpha = 1
+            self.rescheduleIconImageView.alpha = 1
+            self.assignToListIconImageView.alpha = 0
+            
             }, completion: nil)
         
         UIView.animateWithDuration(0.5, delay: 1, options: nil, animations: { () -> Void in
@@ -266,6 +275,13 @@ class MailboxViewController: UIViewController, UIScrollViewDelegate, UIGestureRe
         resetInbox()
     }
 
-
+    func hideLeftIcons() {
+        self.leftIconView.alpha = 0
+    }
+    
+    func hideRightIcons() {
+        self.rightIconView.alpha = 0
+    }
+    
 
 }
