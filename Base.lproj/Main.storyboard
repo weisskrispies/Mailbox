@@ -93,6 +93,28 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <view contentMode="scaleToFill" id="3xx-gf-Gl0" userLabel="Archive Box View">
+                                        <rect key="frame" x="320" y="66" width="320" height="503"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="feed" id="x1E-t2-JIB">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="1202"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" id="bFQ-42-E9J" userLabel="Reschedule View">
+                                        <rect key="frame" x="-320" y="66" width="320" height="503"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="message" id="EF5-B6-3Br">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="86"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                     <view contentMode="scaleToFill" id="zuS-az-CAk" userLabel="Nav">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="64"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -119,6 +141,9 @@
                                                     <segment title="" image="mail_nav_icon"/>
                                                     <segment title="" image="archive_nav_icon"/>
                                                 </segments>
+                                                <connections>
+                                                    <action selector="onSegmentControlTap:" destination="vXZ-lx-hvc" eventType="valueChanged" id="0gP-I4-lFc"/>
+                                                </connections>
                                             </segmentedControl>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vnu-XE-Eqk" userLabel="Compose Button">
                                                 <rect key="frame" x="259" y="-1" width="62" height="65"/>
@@ -207,6 +232,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="archiveBoxView" destination="3xx-gf-Gl0" id="w4u-DH-qtU"/>
                         <outlet property="archiveIconImageView" destination="H57-HI-vx7" id="CE6-W9-rce"/>
                         <outlet property="assignToListIconImageView" destination="CXf-Yp-bf0" id="LTa-QD-2z5"/>
                         <outlet property="assignToListImageView" destination="OIs-VI-cIL" id="UB1-KM-In4"/>
@@ -222,6 +248,7 @@
                         <outlet property="leftIconView" destination="y8u-Lf-IqT" id="P9Z-Kp-HEK"/>
                         <outlet property="messageBackgroundView" destination="5mT-w0-ujQ" id="PI5-ve-OL6"/>
                         <outlet property="messageImageView" destination="2s3-dJ-ZIs" id="2Qg-ab-EW7"/>
+                        <outlet property="rescheduleBoxView" destination="bFQ-42-E9J" id="qtR-cu-xFY"/>
                         <outlet property="rescheduleIconImageView" destination="VNi-dR-664" id="p8z-yW-m88"/>
                         <outlet property="rescheduleImageView" destination="Ccp-Ui-jw6" id="4cd-DH-Wmw"/>
                         <outlet property="rightIconView" destination="T24-Wu-eu7" id="hv7-vA-bSd"/>

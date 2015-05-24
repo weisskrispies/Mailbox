@@ -30,6 +30,9 @@ class MailboxViewController: UIViewController, UIScrollViewDelegate, UIGestureRe
     @IBOutlet weak var compoaseMessageCancelButton: UIButton!
     @IBOutlet weak var composeCancelButton: UIButton!
     @IBOutlet weak var toRecipientField: UITextField!
+
+    @IBOutlet weak var archiveBoxView: UIView!
+    @IBOutlet weak var rescheduleBoxView: UIView!
     
     @IBOutlet weak var inboxHomeView: UIView!
     
@@ -44,6 +47,8 @@ class MailboxViewController: UIViewController, UIScrollViewDelegate, UIGestureRe
     var inboxHomeLocation: CGPoint!
     var menuVisible: Bool!
     var composeMessageViewOriginalCenter: CGPoint!
+    var archiveBoxViewOriginalCenter: CGPoint!
+    var rescheduleBoxViewOriginalCenter: CGPoint!
     
 
     //Colors
@@ -74,9 +79,14 @@ class MailboxViewController: UIViewController, UIScrollViewDelegate, UIGestureRe
         composeBackgroundView.alpha = 0
         composeMessageView.alpha = 0
         
+        archiveBoxViewOriginalCenter = archiveBoxView.center
+        rescheduleBoxViewOriginalCenter = rescheduleBoxView.center
+        
         composeBackgroundView.userInteractionEnabled = Bool(false)
         composeMessageView.userInteractionEnabled = Bool(false)
         menuVisible = false
+        
+        rescheduleBoxView.alpha = 0
     }
 
     override func didReceiveMemoryWarning() {
@@ -373,6 +383,30 @@ class MailboxViewController: UIViewController, UIScrollViewDelegate, UIGestureRe
             }, completion: nil)
     }
     
+    @IBAction func onSegmentControlTap(sender: UISegmentedControl) {
+        
+        if inboxSegmentController.selectedSegmentIndex == 2 {
+            inboxSegmentController.tintColor = mailboxGreen
+            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
+                self.inboxHomeView.center.x == -160
+                self.archiveBoxView.center.x == 160
+            }, completion: nil)
+            
+        } else if inboxSegmentController.selectedSegmentIndex == 0 {
+            inboxSegmentController.tintColor = mailboxYellow
+            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
+                self.inboxHomeView.center.x == 480
+                self.rescheduleBoxView.center.x == 160
+                }, completion: nil)
+        } else if inboxSegmentController.selectedSegmentIndex == 1 {
+            inboxSegmentController.tintColor = mailboxBlue
+            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
+                self.inboxHomeView.center.x == self.inboxHomeLocation.x
+                self.archiveBoxView.center.x == self.archiveBoxViewOriginalCenter.x
+                self.rescheduleBoxView.center.x == self.rescheduleBoxViewOriginalCenter.x
+                }, completion: nil)
+        }
+    }
     
     
 }
