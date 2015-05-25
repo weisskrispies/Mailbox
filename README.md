@@ -1,7 +1,7 @@
 # Mailbox
 CodePath Week 3 Assignment
 
-Time Spent: 15 hours
+Time Spent: 14 hours
 
 ## Stories Completed
 
